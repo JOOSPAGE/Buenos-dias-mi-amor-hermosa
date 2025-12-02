@@ -1,0 +1,212 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+    background-color: #000;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+/* Pantalla de inicio */
+#intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transition: opacity 1s ease-in-out;
+}
+
+#intro-text {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    margin-bottom: 30px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 2s forwards 1s;
+}
+
+#heart {
+    font-size: clamp(3rem, 10vw, 5rem);
+    animation: pulse 2s infinite, float 3s ease-in-out infinite;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+#heart:hover {
+    transform: scale(1.1);
+}
+
+/* Animaciones */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Estrellas */
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.star {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 50%;
+    animation: fall linear infinite, blink 1s infinite alternate;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh); }
+}
+
+@keyframes blink {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+}
+
+/* Slides */
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+    display: flex;
+    opacity: 1;
+}
+
+.message {
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    margin-bottom: 20px;
+    max-width: 90%;
+}
+
+.hacker-text {
+    color: #fff;
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6;
+}
+
+.hacker-text.complete {
+    animation: strongGlow 0.5s infinite alternate;
+}
+
+@keyframes strongGlow {
+    0% {
+        text-shadow: 0 0 10px #fff, 0 0 30px #ff00ff;
+    }
+    100% {
+        text-shadow: 0 0 20px #fff, 0 0 40px #ff00ff;
+    }
+}
+
+.slide img {
+    width: min(80vw, 300px);
+    height: min(80vw, 300px);
+    object-fit: contain;
+    border-radius: 10px;
+    margin-top: 10px;
+    filter: drop-shadow(0 0 10px rgba(156, 39, 176, 0.7));
+}
+
+/* Puntos de progreso */
+.progress-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.dot.active,
+.dot:hover {
+    transform: scale(1.2);
+    background-color: white;
+}
+
+/* Ajustes pantallas pequeñas */
+@media (max-height: 500px) {
+    .slide {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .message {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .slide img {
+        width: min(40vh, 200px);
+        height: min(40vh, 200px);
+    }
+}
+
+#bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    pointer-events: none;
+    background-color: black; /* por si falla el video */
+}
